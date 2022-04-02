@@ -1,17 +1,17 @@
-package services
+package issues
 
 import (
 	"context"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"jira-management/pkg/models"
 	"jira-management/pkg/models/req_res"
-	"jira-management/pkg/repository"
+	"jira-management/pkg/repository/issues"
 	"log"
 	"time"
 )
 
 type issueService struct {
-	repo repository.IssueRepository
+	repo issues.IssueRepository
 }
 type IssueService interface {
 	CreateIssue(*req_res.CreateIssueRequest) (*models.Issue, error)
@@ -20,7 +20,7 @@ type IssueService interface {
 	UpdateIssue(id string, req *req_res.PatchIssueRequest) (*models.Issue, error)
 }
 
-func New(rep repository.IssueRepository) IssueService {
+func New(rep issues.IssueRepository) IssueService {
 	return &issueService{
 		repo: rep,
 	}
