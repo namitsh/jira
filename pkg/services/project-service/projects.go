@@ -1,4 +1,4 @@
-package projects
+package project_service
 
 import (
 	"context"
@@ -59,7 +59,7 @@ func (svc *projectService) GetProjects() ([]*models.Project, error) {
 	defer cancel()
 	projects, err := svc.repo.FindAll(ctx)
 	if err != nil {
-		log.Printf("Error fetching the projects: %s", err.Error())
+		log.Printf("Error fetching the project-service-controller: %s", err.Error())
 		return nil, err
 	}
 	return projects, nil

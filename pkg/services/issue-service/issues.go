@@ -1,4 +1,4 @@
-package issues
+package issue_service
 
 import (
 	"context"
@@ -63,12 +63,12 @@ func (svc *issueService) GetIssue(id string) (*models.Issue, error) {
 
 }
 func (svc *issueService) GetIssues() ([]*models.Issue, error) {
-	log.Println("Getting all issues.")
+	log.Println("Getting all issue-service-controller.")
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	issues, err := svc.repo.FindAll(ctx)
 	if err != nil {
-		log.Printf("Error occurred listing all issues: %s", err.Error())
+		log.Printf("Error occurred listing all issue-service-controller: %s", err.Error())
 		return nil, err
 	}
 	return issues, nil

@@ -26,7 +26,7 @@ type issueRepository struct {
 var issueCollection *mongo.Collection
 
 func New(client *mongo.Client) IssueRepository {
-	issueCollection = configs.GetCollection(client, "jira", "issues")
+	issueCollection = configs.GetCollection(client, "jira", "issue-service-controller")
 	return &issueRepository{
 		client: client,
 	}
@@ -47,7 +47,7 @@ func (is *issueRepository) FindAll(ctx context.Context) ([]*models.Issue, error)
 	allBson := bson.M{}
 	cursor, err := issueCollection.Find(ctx, allBson)
 	if err != nil {
-		log.Printf("Error when getting all issues: %s\n", err.Error())
+		log.Printf("Error when getting all issue-service-controller: %s\n", err.Error())
 		return nil, err
 	}
 	defer cursor.Close(ctx)
@@ -94,7 +94,7 @@ func (is *issueRepository) Update(ctx context.Context, id primitive.ObjectID, is
 	}
 	var updatedIssue *models.Issue
 	if result.MatchedCount == 1 {
-		err := is.client.Database("jira").Collection("issues").FindOne(ctx, filter).Decode(&updatedIssue)
+		err := is.client.Database("jira").Collection("issue-service-controller").FindOne(ctx, filter).Decode(&updatedIssue)
 		if err != nil {
 			log.Printf("Error when getting the issue for ID %s : %s ", id, err.Error())
 			return nil, err
@@ -106,7 +106,7 @@ func (is *issueRepository) Update(ctx context.Context, id primitive.ObjectID, is
 func (is *issueRepository) FindById(ctx context.Context, id primitive.ObjectID) (*models.Issue, error) {
 	var issue *models.Issue
 	getBson := bson.M{"_id": id}
-	err := is.client.Database("jira").Collection("issues").FindOne(ctx, getBson).Decode(&issue)
+	err := is.client.Database("jira").Collection("issue-service-controller").FindOne(ctx, getBson).Decode(&issue)
 	if err == mongo.ErrNoDocuments {
 		log.Printf("No Documents found for issue with ID: %s\n", id)
 		return nil, err

@@ -24,7 +24,7 @@ type projectRepository struct {
 var projectCollection *mongo.Collection
 
 func New(client *mongo.Client) ProjectRepository {
-	projectCollection = configs.GetCollection(client, "jira", "projects")
+	projectCollection = configs.GetCollection(client, "jira", "project-service-controller")
 	return &projectRepository{
 		client: client,
 	}
@@ -42,7 +42,7 @@ func (p *projectRepository) Save(ctx context.Context, project *models.Project) e
 func (p *projectRepository) FindById(ctx context.Context, id primitive.ObjectID) (*models.Project, error) {
 	var project *models.Project
 	getBSON := bson.M{"_id": id}
-	err := p.client.Database("jira").Collection("projects").FindOne(ctx, getBSON).Decode(&project)
+	err := p.client.Database("jira").Collection("project-service-controller").FindOne(ctx, getBSON).Decode(&project)
 	if err == mongo.ErrNoDocuments {
 		log.Printf("No Documents found for project with ID: %s\n", id)
 		return nil, err
@@ -59,7 +59,7 @@ func (p *projectRepository) FindAll(ctx context.Context) ([]*models.Project, err
 	allBSON := bson.M{}
 	cursor, err := projectCollection.Find(ctx, allBSON)
 	if err != nil {
-		log.Printf("Error when getting all projects: %s\n", err.Error())
+		log.Printf("Error when getting all project-service-controller: %s\n", err.Error())
 		return nil, err
 	}
 	defer cursor.Close(ctx)

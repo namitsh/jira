@@ -5,12 +5,12 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/mongo"
 	"jira-management/configs"
-	issues3 "jira-management/pkg/controllers/issues"
-	"jira-management/pkg/controllers/projects"
+	issues3 "jira-management/pkg/controllers/issues-controller"
+	"jira-management/pkg/controllers/projects-controller"
 	"jira-management/pkg/repository/issues"
 	projects2 "jira-management/pkg/repository/projects"
-	issues2 "jira-management/pkg/services/issues"
-	projects3 "jira-management/pkg/services/projects"
+	issues2 "jira-management/pkg/services/issue-service"
+	projects3 "jira-management/pkg/services/project-service"
 	"log"
 	"net/http"
 )
@@ -23,8 +23,8 @@ var (
 	issueService   issues2.IssueService     = issues2.New(issueRepository)
 	projectService projects3.ProjectService = projects3.New(projectRepository)
 
-	issueController   issues3.IssueController    = issues3.New(issueService)
-	projectController projects.ProjectController = projects.New(projectService)
+	issueController   issues3.IssueController               = issues3.New(issueService)
+	projectController projects_controller.ProjectController = projects_controller.New(projectService)
 )
 
 func main() {

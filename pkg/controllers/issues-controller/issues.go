@@ -1,9 +1,9 @@
-package issues
+package issues_controller
 
 import (
 	"github.com/gin-gonic/gin"
 	"jira-management/pkg/models/req_res"
-	"jira-management/pkg/services/issues"
+	"jira-management/pkg/services/issue-service"
 	"log"
 	"net/http"
 )
@@ -16,10 +16,10 @@ type IssueController interface {
 }
 
 type issueController struct {
-	service issues.IssueService
+	service issue_service.IssueService
 }
 
-func New(svc issues.IssueService) IssueController {
+func New(svc issue_service.IssueService) IssueController {
 	return &issueController{
 		service: svc,
 	}

@@ -1,9 +1,9 @@
-package projects
+package projects_controller
 
 import (
 	"github.com/gin-gonic/gin"
 	"jira-management/pkg/models/req_res"
-	"jira-management/pkg/services/projects"
+	"jira-management/pkg/services/project-service"
 	"log"
 	"net/http"
 )
@@ -14,10 +14,10 @@ type ProjectController interface {
 }
 
 type projectController struct {
-	svc projects.ProjectService
+	svc project_service.ProjectService
 }
 
-func New(svc projects.ProjectService) ProjectController {
+func New(svc project_service.ProjectService) ProjectController {
 	return &projectController{
 		svc: svc,
 	}
